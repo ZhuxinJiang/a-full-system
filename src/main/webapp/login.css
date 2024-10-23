@@ -1,0 +1,113 @@
+body {
+    background: url('loginbackground.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 内容垂直居中 */
+    margin: 0;
+}
+
+/* 最外框 */
+.rg_layout {
+    width: 900px;
+    height: 500px;
+    border: 0px;
+    background-color: rgba(234, 190, 218, 0.1);
+    margin: auto;/* 水平居中 */
+    border-radius: 30px;/* 圆角 */
+    box-shadow: 0 0 30px rgba(255,255,255,0.6) inset;
+}
+
+/* 左字 */
+.rg_left {
+    float: left;
+    margin: 60px;
+}
+.rg_left > p:first-child {
+    color: #FFFFFF;
+    font-size: 50px;
+    font-weight: bold;
+    margin-left: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+}
+.rg_left > p:last-child {
+    color:#FFFFFF;
+    font-size: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+/* 中框 */
+.rg_center {
+    position: relative;
+    top: 100px;
+    left: 10px;
+}
+
+/* 右字 */
+.rg_right {
+    float: right;
+    color:white;
+    position: relative;
+    left: -80px ;
+    top: 90px;
+}
+.rg_right > p:first-child {
+    font-size: 15px;
+}
+.rg_right p a {
+    color:pink;
+}
+
+#username, #password, #checkcode {
+    width: 251px;
+    height: 32px;
+    border-radius: 20px;/* 圆角 */
+    border-color: transparent;
+    padding-left: 10px;
+    background-color: rgba(255, 255, 255, 0.3); /* 背景颜色半透 */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* 阴影 */
+    margin-bottom: 35px; /* 下边距*/
+    margin-left: 20px;
+    margin-top: 15px;
+}
+
+#username::placeholder,
+#password::placeholder,
+#checkcode::placeholder {
+    color: rgba(255, 255, 255, 0.8); /* 提示文字白色 */
+}
+
+#checkcode {
+    width: 110px;
+}
+
+#img_check {
+    height: 32px;
+    vertical-align: middle;
+    margin-left: 30px;
+}
+
+#btn_sub {
+    width: 150px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    border: 1px solid white ;
+    border-radius: 20px;/* 圆角 */
+    margin-top: 20px;
+    margin-left: -80px;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+.error {
+    color:red;
+}
+#td_sub {
+    padding-left: 150px;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Display XML Data</title>
+  <style>
+    .user {
+      margin-bottom: 10px;
+    }
+  </style>
+  <script>
+    function loadXML() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var xmlDoc = this.responseXML;
+          var users = xmlDoc.getElementsByTagName("user");
+          var userData = "";
+          for (var i = 0; i < users.length; i++) {
+            var username = users[i].getElementsByTagName("username")[0].childNodes[0].nodeValue;
+            var password = users[i].getElementsByTagName("password")[0].childNodes[0].nodeValue;
+            var email = users[i].getElementsByTagName("email")[0].childNodes[0].nodeValue;
+            var phone = users[i].getElementsByTagName("phone")[0].childNodes[0].nodeValue;
+            userData += "Username: " + username + "<br>";
+            userData += "Password: " + password + "<br>";
+            userData += "Email: " + email + "<br>";
+            userData += "Phone: " + phone + "<br><br>";
+          }
+          document.getElementById("xmlData").innerHTML = userData;
+        }
+      };
+      xhttp.open("GET", "users.xml", true);
+      xhttp.send();
+    }
+  </script>
+</head>
+<body onload="loadXML()">
+<h2>Users Data:</h2>
+<div id="xmlData"></div>
+</body>
+</html>

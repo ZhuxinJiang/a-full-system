@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mydoc</title>
+  <style>
+    .poem {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      padding: 40px;
+      border-radius: 5px;
+    }
+    hr {
+      border: none;
+      border-top: 1px dashed rgba(25, 97, 141, 0.57);
+      margin: 10px 0;
+      height: 10px;
+    }
+    .bio {
+      text-indent: 2em; /*文本缩进*/
+    }
+    .author-bottom {
+      display: flex;
+    }
+    .author-image {
+      flex: 0 0 auto; /*不伸缩，不收缩*/
+      margin-right: 20px;
+    }
+    .author-text {
+      flex: 1;
+    }
+    .author-image img {
+      width: 100px;
+      border-radius: 50%;
+    }
+
+    .author {
+      color: #4b4a4a;
+    }
+
+    .analysis{
+      padding-bottom: 20px;
+    }
+    .appreciation-container {
+      position: relative;
+    }
+
+    .edit-buttons {
+      position: absolute;
+      bottom: -10px;
+      right: 0;
+    }
+
+    .edit-buttons button {
+      margin-left: 10px;
+    }
+  </style>
+
+
+</head>
+<body>
+<div class="poem">
+  <div class="current-time">当前时间：加载中...</div>
+  <div class="visit-count">访问次数：加载中...</div>
+  <h1 class="title">送别 / 山中送别 / 送友</h1>
+  <h4 class="author">【作者】王维 【朝代】唐</h4>
+
+  <hr>
+  <div class="content">
+    <p class="poetry">
+      山中相送罢，日暮掩柴扉。</br>
+      春草明年绿，王孙归不归。
+    </p>
+    <h3>译文</h3>
+    <p class="translation">在深山中送走了好友，夕阳落下把柴门半掩。春草到明年催生新绿，朋友啊你能不能回还？</p>
+    <h3>注释</h3>
+    <p class="annotation">⑴掩：关闭。柴扉：柴门。</br>⑵明年：一作“年年”。</br>⑶王孙：贵族的子孙，这里指送别的友人。</p>
+  </div>
+  <hr>
+  <div class="analysis">
+    <h3>赏析</h3>
+    <div class="appreciation-container">
+      <div class="appreciation-text" contenteditable="true">
+        这首《山中送别》，不写离亭饯别的情景，而是匠心别运，选取了与一般送别诗全然不同的下笔着墨之点。
+        诗的首句“山中相送罢”，在一开头就告诉读者相送已罢，把送行时的话别场面、惜别情怀，用一个看似毫无感情色彩的“罢”字一笔带过。这里，从相送到送罢，跳越了一段时间。而次句从白昼送走行人一下子写到“日暮掩柴扉”，则又跳越了一段更长的时间。诗人在把生活接入诗篇时，剪去了在这段时间内送行者的所感所想，都当作暗场处理了。
+      </div>
+      <div class="edit-buttons">
+        <button id="saveAppreciation">保存</button>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="author-bio">
+    <div class="author-title">
+      <h3>作者介绍</h3>
+    </div>
+    <div class="author-bottom">
+      <div class="author-image">
+        <img src="wangwei.png" alt="王维">
+      </div>
+      <div class="author-text">
+        <p class="bio">王维（699年－761年，一说701年—761年），河东蒲州（今山西永济市）人，祖籍山西祁县，唐朝著名诗人、画家，字摩诘，号摩诘居士，世称“王右丞”，因笃信佛教，有“诗佛”之称。今存诗400余首，重要诗作有《相思》、《山居秋暝》等。受禅宗影响很大，精通佛学，精通诗、书、画、音乐等，与孟浩然合称“王孟”。苏轼评价其：“味摩诘之诗，诗中有画；观摩诘之画，画中有诗。” </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function updateTime() {
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = (now.getMonth() + 1).toString().padStart(2, '0');
+    var day = now.getDate().toString().padStart(2, '0');
+    var hours = now.getHours().toString().padStart(2, '0');
+    var minutes = now.getMinutes().toString().padStart(2, '0');
+    var seconds = now.getSeconds().toString().padStart(2, '0');
+    var currentTime = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+    document.querySelector('.current-time').innerText = '当前时间：' + currentTime;
+  }
+
+  // 更新时间
+  updateTime();
+  // 每秒更新一次时间
+  setInterval(updateTime, 1000);
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // 更新访问次数
+    var visitCount = localStorage.getItem('visitCount');
+    if (!visitCount) {
+      visitCount = 0;
+    }
+    visitCount++;
+    localStorage.setItem('visitCount', visitCount);
+    document.querySelector('.visit-count').innerText = '访问次数：' + visitCount;
+
+    // 保存赏析
+    document.getElementById('saveAppreciation').addEventListener('click', function () {
+      var appreciationText = document.querySelector('.appreciation-text');
+      var editedContent = appreciationText.innerText;
+      localStorage.setItem('appreciationContent', editedContent);
+      alert('赏析已保存！');
+    });
+
+    // 加载保存的赏析内容
+    var savedAppreciation = localStorage.getItem('appreciationContent');
+    if (savedAppreciation) {
+      document.querySelector('.appreciation-text').innerText = savedAppreciation;
+    }
+  });
+</script>
+</body>
+</html>

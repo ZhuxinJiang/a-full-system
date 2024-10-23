@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="gb2312">
+    <title>登录页面</title>
+
+    <link rel="stylesheet" type="text/css" href="login.css">
+
+    <script>
+        window.onload = function() {
+            updateCheckCodeImage();
+
+            var form = document.getElementById("form");
+            var username = document.getElementById("username");
+            var password = document.getElementById("password");
+            var checkcodeInput = document.getElementById("checkcode");
+
+            function handleMouseEvents(element) {
+                element.addEventListener('mouseover', function() {
+                    element.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+                });
+
+                element.addEventListener('mouseout', function() {
+                    element.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+                });
+            }
+
+            handleMouseEvents(username);
+            handleMouseEvents(password);
+            handleMouseEvents(checkcodeInput);
+
+            //提交键检查
+            document.getElementById("form").onsubmit = function(){
+                return checkCode();
+            };
+
+            //实时验证码检查
+            document.getElementById("checkcode").addEventListener('blur', function() {
+                checkCode();
+            });
+        };
+
+        // 生成随机验证码
+        function generateCheckCode() {
+            var checkCode = '';
+            var checkCodeLength = 4;
+            var characters = 'ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            for (var i = 0; i < checkCodeLength; i++) {
+                var randomIndex = Math.floor(Math.random() * characters.length);
+                checkCode += characters.charAt(randomIndex);
+            }
+            return checkCode;
+        }
+
+        // 更新验证码图片
+        function updateCheckCodeImage() {
+            var checkCode = generateCheckCode();
+            var imgCheck = document.getElementById("img_check");
+            imgCheck.src = "https://dummyimage.com/100x40/000/fff&text=" + checkCode;
+        }
+
+        //检查验证码
+        function checkCode(){
+            var userInput = document.getElementById("checkcode").value.toLowerCase(); //将用户输入的验证码转为小写
+            var generatedCode = document.getElementById("img_check").src.split("&text=")[1].toLowerCase(); //将从验证码图片链接中获取生成的验证码转为小写
+
+            var s_checkcode = document.getElementById("s_checkcode");
+
+            if(userInput === generatedCode){
+                s_checkcode.innerHTML = "";
+                s_checkcode.classList.remove("error");
+                document.getElementById("checkcode").style.borderColor = '';
+                return true;
+            } else {
+                s_checkcode.innerHTML = "验证码输入错误";
+                s_checkcode.classList.add("error");
+                document.getElementById("checkcode").style.borderColor = 'red';
+                return false;
+            }
+        }
+
+    </script>
+
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=gb2312">
+
+</head>
+
+<body>
+
+<div class="rg_layout">
+
+    <div class="rg_left">
+        <p>登录</p>
+        <p>USER LOGIN</p>
+    </div>
+
+    <div class="rg_center">
+        <div class="rg_form">
+            <form action="usercheck.jsp" id="form" method="post">
+                <table>
+                    <!-- 用户名 -->
+                    <tr>
+                        <td >
+                            <input type="text" name="username" id="username" placeholder="Username">
+                            <span id="s_username" class="error"></span>
+                        </td>
+                    </tr>
+
+                    <!-- 密码 -->
+                    <tr>
+                        <td>
+                            <input type="password" name="password" id="password" placeholder="Password">
+                            <span id="s_password" class="error"></span>
+                        </td>
+                    </tr>
+
+                    <!-- 验证码 -->
+                    <tr>
+                        <td>
+                            <input type="text" name="checkcode" id="checkcode" placeholder="Checkcode">
+                            <img id="img_check" src="img/verify_code.jpg" onclick="updateCheckCodeImage()" style="cursor: pointer;">
+                            <span id="s_checkcode" class="error"></span>
+                        </td>
+                    </tr>
+
+                    <!-- 登录 -->
+                    <tr>
+                        <td colspan="2" id="td_sub"><input type="submit" id="btn_sub" value="Login"></td>
+                    </tr>
+                </table>
+
+            </form>
+        </div>
+    </div>
+
+    <div class="rg_right">
+        <p>还没有账号?<a href="register.jsp">立即注册</a></p>
+    </div>
+
+</div>
+
+</body>
+</html>
